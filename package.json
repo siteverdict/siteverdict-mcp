@@ -1,6 +1,6 @@
 {
   "name": "@siteverdict/mcp",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "SiteVerdict MCP server: website audit tools for AI agents (tracking & consent, speed & revenue, WCAG accessibility, domain/email health, AI-search readiness) powered by Apify Actors.",
   "mcpName": "io.github.siteverdict/siteverdict",
   "type": "module",

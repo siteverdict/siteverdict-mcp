@@ -96,8 +96,8 @@ export class OAuthServer {
       client_id_metadata_document_supported: true,
       authorization_response_iss_parameter_supported: true,
       service_documentation: `https://github.com/${BRAND.githubOwner}/${BRAND.githubRepo}#readme`,
-      op_policy_uri: `${BRAND.website}/privacy`,
-      op_tos_uri: `${BRAND.website}/terms`,
+      op_policy_uri: BRAND.privacyUrl,
+      op_tos_uri: BRAND.termsUrl,
     };
   }
 

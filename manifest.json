@@ -2,19 +2,19 @@
   "manifest_version": "0.3",
   "name": "siteverdict",
   "display_name": "SiteVerdict — Website Audit Tools",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Website audits (GDPR consent, speed, WCAG, SPF/DMARC, AI search) plus optional business toolsets: leads, compliance, travel, SEO, UK property.",
   "long_description": "SiteVerdict gives Claude read-mostly business tools backed by Apify Actors. The default 'web' toolset audits any public website: tracking & cookie consent (Consent Mode v2, tags before consent), Core Web Vitals with a revenue-loss estimate, WCAG 2.2 / European Accessibility Act checks, domain and email health (SPF, DKIM, DMARC, TLS), AI-search readiness, tech-stack detection, change/uptime monitoring and clean Markdown with citations. Optional toolsets add marketing (rankings, Search Console + GA4 diagnosis, Google ad transparency, own reviews), leads (local businesses, SEC/GLEIF registries, UK/EU tenders), compliance (sanctions screening, VAT/company-number validation, PDF invoice extraction), travel (fares, deals, UK261/EU261, visa rules) and UK property data. Runs on your own Apify account (pay-per-event, spend-capped per run). Not legal, financial, immigration or valuation advice.",
   "author": {
     "name": "Aman Thakran (BharatFare Travel and Technologies Ltd)",
     "email": "aman.thakran@bharatfare.com",
-    "url": "https://tools.webrevenuescan.com"
+    "url": "https://github.com/siteverdict/siteverdict-mcp"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/siteverdict/siteverdict-mcp"
   },
-  "homepage": "https://tools.webrevenuescan.com",
+  "homepage": "https://github.com/siteverdict/siteverdict-mcp",
   "documentation": "https://github.com/siteverdict/siteverdict-mcp#readme",
   "support": "https://github.com/siteverdict/siteverdict-mcp/issues",
   "icon": "marketplace/assets/icon-512.png",
@@ -198,7 +198,7 @@
   ],
   "license": "MIT",
   "privacy_policies": [
-    "https://tools.webrevenuescan.com/privacy"
+    "https://github.com/siteverdict/siteverdict-mcp/blob/main/PRIVACY.md"
   ],
   "user_config": {
     "apify_token": {

@@ -15,7 +15,7 @@ input:focus-visible,button:focus-visible,a:focus-visible{outline:3px solid var(-
 button.primary{background:var(--accent);color:var(--accent-fg);border-color:var(--accent)}a{color:var(--accent)}.err{color:var(--err);font-weight:600}.small{font-size:14px}`;
 
 function page(status: number, title: string, body: string, csp: string, extraHeaders: Record<string, string> = {}): Response {
-  const html = `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="referrer" content="no-referrer"><title>${esc(title)} · ${esc(BRAND.name)}</title><style>${STYLE}</style></head><body><main><div class="card">${body}</div><p class="small">${esc(BRAND.name)} is operated by ${esc(BRAND.company)}, ${esc(BRAND.companyLocation)}. <a href="${esc(BRAND.website)}/privacy">Privacy</a> · <a href="${esc(BRAND.website)}/terms">Terms</a> · Support: <a href="mailto:${esc(BRAND.supportEmail)}">${esc(BRAND.supportEmail)}</a></p></main></body></html>`;
+  const html = `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="referrer" content="no-referrer"><title>${esc(title)} · ${esc(BRAND.name)}</title><style>${STYLE}</style></head><body><main><div class="card">${body}</div><p class="small">${esc(BRAND.name)} is operated by ${esc(BRAND.company)}, ${esc(BRAND.companyLocation)}. <a href="${esc(BRAND.privacyUrl)}">Privacy</a> · <a href="${esc(BRAND.termsUrl)}">Terms</a> · Support: <a href="mailto:${esc(BRAND.supportEmail)}">${esc(BRAND.supportEmail)}</a></p></main></body></html>`;
   return new Response(html, {
     status,
     headers: {

@@ -17,13 +17,15 @@ export interface Brand {
   apifyUsername: string;
   actorPrefix: string;
   website: string;
+  privacyUrl: string;
+  termsUrl: string;
   supportEmail: string;
   uriScheme: string;
   tagline: string;
   company: string;
   companyLocation: string;
   owner: string;
-  /** Planned public Streamable HTTP endpoint (not deployed). */
+  /** Public Streamable HTTP endpoint (live since 13 Oct 2026). */
   mcpPublicUrl: string;
 }
 
@@ -32,7 +34,7 @@ function loadBrand(): Brand {
   const parsed = JSON.parse(raw) as Partial<Brand>;
   const required: (keyof Brand)[] = [
     'name', 'displayName', 'slug', 'npmPackage', 'binName', 'registryName', 'githubOwner',
-    'githubRepo', 'apifyUsername', 'actorPrefix', 'website', 'supportEmail', 'uriScheme', 'tagline',
+    'githubRepo', 'apifyUsername', 'actorPrefix', 'website', 'privacyUrl', 'termsUrl', 'supportEmail', 'uriScheme', 'tagline',
     'company', 'companyLocation', 'owner', 'mcpPublicUrl',
   ];
   for (const key of required) {

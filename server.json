@@ -3,8 +3,8 @@
   "name": "io.github.siteverdict/siteverdict",
   "title": "SiteVerdict — Website Audit Tools",
   "description": "Website audits for AI agents: GDPR consent, speed, WCAG, SPF/DMARC and AI-search readiness.",
-  "version": "0.2.0",
-  "websiteUrl": "https://tools.webrevenuescan.com",
+  "version": "0.2.1",
+  "websiteUrl": "https://github.com/siteverdict/siteverdict-mcp",
   "repository": {
     "url": "https://github.com/siteverdict/siteverdict-mcp",
     "source": "github"
@@ -14,7 +14,7 @@
       "registryType": "npm",
       "registryBaseUrl": "https://registry.npmjs.org",
       "identifier": "@siteverdict/mcp",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "runtimeHint": "npx",
       "transport": {
         "type": "stdio"
@@ -42,6 +42,20 @@
           "isSecret": false,
           "format": "number",
           "default": "2"
+        }
+      ]
+    }
+  ],
+  "remotes": [
+    {
+      "type": "streamable-http",
+      "url": "https://mcp.webrevenuescan.com/mcp",
+      "headers": [
+        {
+          "name": "X-Apify-Token",
+          "description": "Your own Apify API token (or sign in with OAuth instead). Scans run on your Apify account.",
+          "isRequired": false,
+          "isSecret": true
         }
       ]
     }

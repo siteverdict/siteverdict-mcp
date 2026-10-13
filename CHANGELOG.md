@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.2.1 — 2026-10-13
+- Hosted endpoint is live: `https://mcp.webrevenuescan.com/mcp` (Streamable HTTP; OAuth or `X-Apify-Token` header). Added to the registry `server.json` as a remote.
+- Every tool parameter now has a description.
+- Privacy, terms and homepage links now point to the GitHub repository.
+
 ## 0.2.0 — unreleased (prepared 2026-10-11, directory-ready build)
 - **21 new data tools** from every finished Actor that has an MCP-TOOL.md (18 Actors), plus `get_run_results`. That makes 29 tools in total.
 - **Toolsets**: `web` (default), `marketing`, `leads`, `compliance`, `travel`, `property`, `all`. Select them with `--toolsets`, `SITEVERDICT_TOOLSETS`, `/mcp/<toolsets>` or `?toolsets=`. `--tools` / `?tools=` is an explicit allow-list.

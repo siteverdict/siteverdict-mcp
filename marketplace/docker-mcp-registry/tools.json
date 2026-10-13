@@ -1,0 +1,1776 @@
+[
+  {
+    "name": "audit_tracking_consent",
+    "description": "Loads the site in a real browser three ways (no click, Reject, Accept all) and reports which tags fire before consent or after Reject, tracking cookies set without consent, Google Consent Mode v2 signals, broken GA4/GTM tags, duplicate page_views and missing conversions. Returns a score, prioritised plain-English fixes and a link to the full HTML report. Use for GDPR/UK GDPR/PECR/ePrivacy cookie compliance and \"why is my analytics data wrong\" questions. Runs on the caller's own Apify account (APIFY_TOKEN) and is billed by Apify pay-per-event; nothing is charged by this server.",
+    "arguments": [
+      {
+        "name": "url",
+        "type": "string",
+        "desc": "Public website URL, e.g. \"https://example.com\" (https:// is added if missing). Private/internal addresses are rejected."
+      },
+      {
+        "name": "scanMode",
+        "type": "string",
+        "desc": "\"full\" = 3 visits (no click / Reject / Accept all). \"quick\" = 1 visit, cheaper: tag inventory, pre-consent tracking and broken tags only.",
+        "optional": true
+      },
+      {
+        "name": "internalPages",
+        "type": "integer",
+        "desc": "Extra internal pages to check per scenario (0 = home page only).",
+        "optional": true
+      },
+      {
+        "name": "locale",
+        "type": "string",
+        "desc": "Browser language, e.g. en-GB, de-DE, fr-FR (banners are often localised).",
+        "optional": true
+      },
+      {
+        "name": "timezoneId",
+        "type": "string",
+        "desc": "IANA time zone, e.g. Europe/London, Europe/Berlin, America/New_York.",
+        "optional": true
+      },
+      {
+        "name": "maxCostUsd",
+        "type": "number",
+        "desc": "Spend cap for this run on YOUR Apify account (forwarded to Apify as maxTotalChargeUsd). Default from server config ($2).",
+        "optional": true
+      },
+      {
+        "name": "waitSecs",
+        "type": "integer",
+        "desc": "How long to wait for results before returning status \"running\" with a runId (the scan keeps going; use get_audit_results). Default 240.",
+        "optional": true
+      }
+    ]
+  },
+  {
+    "name": "scan_speed_and_revenue",
+    "description": "Measures Core Web Vitals (LCP, INP, CLS, TTFB) and page weight on key pages, finds the biggest speed bottlenecks (images, render-blocking scripts, third-party tags) and, if you give traffic and order value, estimates monthly revenue lost to slow pages. Returns a score, metrics, prioritised fixes and a full-report link. Runs on the caller's own Apify account (APIFY_TOKEN) and is billed by Apify pay-per-event; nothing is charged by this server.",
+    "arguments": [
+      {
+        "name": "url",
+        "type": "string",
+        "desc": "Public website URL, e.g. \"https://example.com\" (https:// is added if missing). Private/internal addresses are rejected."
+      },
+      {
+        "name": "device",
+        "type": "string",
+        "desc": "Emulated device; Google ranks on mobile.",
+        "optional": true
+      },
+      {
+        "name": "maxPages",
+        "type": "integer",
+        "desc": "Pages to test (home page + discovered key pages).",
+        "optional": true
+      },
+      {
+        "name": "monthlyVisitors",
+        "type": "integer",
+        "desc": "Optional, for the revenue-loss estimate.",
+        "optional": true
+      },
+      {
+        "name": "averageOrderValue",
+        "type": "number",
+        "desc": "Optional average order / lead value, for the revenue estimate.",
+        "optional": true
+      },
+      {
+        "name": "conversionRatePct",
+        "type": "number",
+        "desc": "Optional current conversion rate in %, for the revenue estimate.",
+        "optional": true
+      },
+      {
+        "name": "currency",
+        "type": "string",
+        "desc": "ISO currency code for money figures.",
+        "optional": true
+      },
+      {
+        "name": "maxCostUsd",
+        "type": "number",
+        "desc": "Spend cap for this run on YOUR Apify account (forwarded to Apify as maxTotalChargeUsd). Default from server config ($2).",
+        "optional": true
+      },
+      {
+        "name": "waitSecs",
+        "type": "integer",
+        "desc": "How long to wait for results before returning status \"running\" with a runId (the scan keeps going; use get_audit_results). Default 240.",
+        "optional": true
+      }
+    ]
+  },
+  {
+    "name": "audit_accessibility_wcag",
+    "description": "Crawls pages in a real browser and runs axe-core WCAG 2.2 checks (A/AA/AAA), mapping issues to WCAG success criteria and EN 301 549 / European Accessibility Act duties. Returns a score, issue counts by impact, the affected pages and concrete code-level fixes, plus a full-report link. Automated testing finds a subset of WCAG issues; it does not replace a manual audit. Runs on the caller's own Apify account (APIFY_TOKEN) and is billed by Apify pay-per-event; nothing is charged by this server.",
+    "arguments": [
+      {
+        "name": "url",
+        "type": "string",
+        "desc": "Public website URL, e.g. \"https://example.com\" (https:// is added if missing). Private/internal addresses are rejected."
+      },
+      {
+        "name": "maxPages",
+        "type": "integer",
+        "desc": "Pages to crawl on the same host.",
+        "optional": true
+      },
+      {
+        "name": "wcagLevel",
+        "type": "string",
+        "desc": "Conformance level to test against (AA is the legal baseline in most regions).",
+        "optional": true
+      },
+      {
+        "name": "includeBestPractices",
+        "type": "boolean",
+        "desc": "Also report axe \"best-practice\" rules that are not strict WCAG failures.",
+        "optional": true
+      },
+      {
+        "name": "maxCostUsd",
+        "type": "number",
+        "desc": "Spend cap for this run on YOUR Apify account (forwarded to Apify as maxTotalChargeUsd). Default from server config ($2).",
+        "optional": true
+      },
+      {
+        "name": "waitSecs",
+        "type": "integer",
+        "desc": "How long to wait for results before returning status \"running\" with a runId (the scan keeps going; use get_audit_results). Default 240.",
+        "optional": true
+      }
+    ]
+  },
+  {
+    "name": "check_domain_email_health",
+    "description": "Checks a domain's email authentication and deliverability setup (MX, SPF, DKIM, DMARC policy, BIMI, MTA-STS/TLS-RPT), DNS hygiene (DNSSEC, CAA, nameservers) and HTTPS/TLS certificate expiry. Flags spoofing risk and Gmail/Yahoo bulk-sender requirement gaps with exact DNS records to add. Runs on the caller's own Apify account (APIFY_TOKEN) and is billed by Apify pay-per-event; nothing is charged by this server.",
+    "arguments": [
+      {
+        "name": "domain",
+        "type": "string",
+        "desc": "Domain name, e.g. \"example.com\" (a URL or email address is accepted and reduced to its domain)."
+      },
+      {
+        "name": "dkimSelectors",
+        "type": "array",
+        "desc": "Optional DKIM selectors to test (e.g. \"google\", \"selector1\"). Common selectors are tried automatically.",
+        "optional": true
+      },
+      {
+        "name": "maxCostUsd",
+        "type": "number",
+        "desc": "Spend cap for this run on YOUR Apify account (forwarded to Apify as maxTotalChargeUsd). Default from server config ($2).",
+        "optional": true
+      },
+      {
+        "name": "waitSecs",
+        "type": "integer",
+        "desc": "How long to wait for results before returning status \"running\" with a runId (the scan keeps going; use get_audit_results). Default 240.",
+        "optional": true
+      }
+    ]
+  },
+  {
+    "name": "check_ai_search_readiness",
+    "description": "Checks whether AI assistants and AI search engines can find, read and cite the site: robots.txt rules for GPTBot/ClaudeBot/PerplexityBot/Google-Extended, llms.txt, structured data (schema.org), server-rendered content, meta/canonical tags and sitemap. Returns a readiness score and prioritised fixes. Runs on the caller's own Apify account (APIFY_TOKEN) and is billed by Apify pay-per-event; nothing is charged by this server.",
+    "arguments": [
+      {
+        "name": "url",
+        "type": "string",
+        "desc": "Public website URL, e.g. \"https://example.com\" (https:// is added if missing). Private/internal addresses are rejected."
+      },
+      {
+        "name": "maxPages",
+        "type": "integer",
+        "desc": "Pages to sample for content/structured-data checks.",
+        "optional": true
+      },
+      {
+        "name": "maxCostUsd",
+        "type": "number",
+        "desc": "Spend cap for this run on YOUR Apify account (forwarded to Apify as maxTotalChargeUsd). Default from server config ($2).",
+        "optional": true
+      },
+      {
+        "name": "waitSecs",
+        "type": "integer",
+        "desc": "How long to wait for results before returning status \"running\" with a runId (the scan keeps going; use get_audit_results). Default 240.",
+        "optional": true
+      }
+    ]
+  },
+  {
+    "name": "full_website_audit",
+    "description": "Runs the tracking & consent, speed & revenue, accessibility (WCAG 2.2), domain/email health and AI-search readiness checks IN PARALLEL on one website, then merges them into an overall score, an executive summary and a single fix list ranked by severity, legal/revenue impact and effort. Best first call for \"audit my website\" or \"what should I fix first\". Partial results are returned if one check fails. Starts one Apify run per check on the caller's Apify account (pay-per-event).",
+    "arguments": [
+      {
+        "name": "url",
+        "type": "string",
+        "desc": "Public website URL, e.g. \"https://example.com\" (https:// is added if missing). Private/internal addresses are rejected."
+      },
+      {
+        "name": "checks",
+        "type": "array",
+        "desc": "Which checks to run (default: all five). domain_email uses the URL's domain.",
+        "optional": true
+      },
+      {
+        "name": "maxPages",
+        "type": "integer",
+        "desc": "Pages per crawler-based check (keeps cost and time down).",
+        "optional": true
+      },
+      {
+        "name": "device",
+        "type": "string",
+        "desc": "",
+        "optional": true
+      },
+      {
+        "name": "maxCostUsd",
+        "type": "number",
+        "desc": "Total spend cap across all runs on YOUR Apify account (split evenly per check). Default: $2 per check.",
+        "optional": true
+      },
+      {
+        "name": "waitSecs",
+        "type": "integer",
+        "desc": "How long to wait for results before returning status \"running\" with a runId (the scan keeps going; use get_audit_results). Default 240.",
+        "optional": true
+      }
+    ]
+  },
+  {
+    "name": "get_audit_results",
+    "description": "Fetches the status and results of an audit run that was still \"running\" when its tool returned (or any earlier run), by Apify runId. Does not start a new scan and costs nothing extra.",
+    "arguments": [
+      {
+        "name": "runId",
+        "type": "string",
+        "desc": "run.runId from an earlier result"
+      },
+      {
+        "name": "check",
+        "type": "string",
+        "desc": "Which check the run belongs to (for parsing the results)."
+      }
+    ]
+  },
+  {
+    "name": "detect_tech_stack",
+    "description": "Detects the technology stack of one or many websites from public signals: homepage HTML, script/stylesheet URLs, HTTP headers, cookie names, public DNS (MX, SPF, DMARC, NS, CNAME), TLS issuer and robots.txt. Returns per site the technologies found (category, confidence 0-100, version, evidence) plus convenience fields cms, ecommerce, analytics, advertising, hosting, cdn, emailProviders and dnsProvider. Covers 1,000+ technologies (CMS, ecommerce and Shopify apps, analytics, tag managers, ad pixels, consent tools, CRM, chat, payments, CDN, hosting, email providers). Filters build lists such as \"Shopify stores not using Klaviyo\" (onlySitesUsing / excludeSitesUsing). mode \"http\" (default) is fast and cheap; \"browser\" also catches tags injected by tag managers. Respects robots.txt and never bypasses bot protection: blocked sites return status \"blocked\" and are not charged. It analyses only the sites you pass; it cannot list every site using a technology. Runs an Apify Actor on the caller's own Apify account (billed by Apify pay-per-event, capped per run).",
+    "arguments": [
+      {
+        "name": "urls",
+        "type": "array",
+        "desc": "Domains or URLs, e.g. [\"example.com\", \"https://shop.example.co.uk\"]"
+      },
+      {
+        "name": "mode",
+        "type": "string",
+        "desc": "\"browser\" renders in headless Chrome (more tags, costs more). Prefer http.",
+        "optional": true
+      },
+      {
+        "name": "extraPaths",
+        "type": "array",
+        "desc": "Extra paths per site, e.g. [\"/pricing\", \"/cart\"]",
+        "optional": true
+      },
+      {
+        "name": "checkDns",
+        "type": "boolean",
+        "desc": "",
+        "optional": true
+      },
+      {
+        "name": "checkTls",
+        "type": "boolean",
+        "desc": "",
+        "optional": true
+      },
+      {
+        "name": "minConfidence",
+        "type": "integer",
+        "desc": "",
+        "optional": true
+      },
+      {
+        "name": "includeEvidence",
+        "type": "boolean",
+        "desc": "Include evidence strings (more tokens).",
+        "optional": true
+      },
+      {
+        "name": "onlySitesUsing",
+        "type": "array",
+        "desc": "Keep only sites using these technologies, e.g. [\"Shopify\"]",
+        "optional": true
+      },
+      {
+        "name": "onlyCategories",
+        "type": "array",
+        "desc": "Keep only these categories, e.g. [\"Booking & scheduling\"]",
+        "optional": true
+      },
+      {
+        "name": "matchAll",
+        "type": "boolean",
+        "desc": "onlySitesUsing must ALL match (default: any).",
+        "optional": true
+      },
+      {
+        "name": "excludeSitesUsing",
+        "type": "array",
+        "desc": "Drop sites using these, e.g. [\"Klaviyo\"]",
+        "optional": true
+      }
+    ]
+  },
+  {
+    "name": "monitor_website_changes",
+    "description": "Checks web pages for uptime and for changes since the last check. Per URL: up/down/blocked status, HTTP status, response time, TTFB, redirect chain, DNS result and TLS days-to-expiry; for pages checked before, a change verdict (baseline | no-change | changed) with a plain-English summary and a unified diffExcerpt. Detects text changes in the whole page or a CSS/XPath region, price changes, list items added/removed, keywords appearing/disappearing, SEO-critical changes (title, meta description, canonical, H1, noindex appearing), robots.txt/sitemap changes and, in browser mode, screenshot pixel differences. The FIRST call for a URL returns changeStatus \"baseline\": reuse the same stateStoreName on later calls to compare. Saves a private snapshot in the caller's Apify storage (nothing on the target site changes). Dates, times, UUIDs and copyright years are ignored by default; add ignorePatterns/excludeSelectors for false changes. Respects robots.txt; blocked pages are not charged. Browser mode costs 3x an HTTP check. Runs an Apify Actor on the caller's own Apify account (billed by Apify pay-per-event, capped per run).",
+    "arguments": [
+      {
+        "name": "urls",
+        "type": "array",
+        "desc": "Pages to check, e.g. [\"https://shop.example/pricing\"]"
+      },
+      {
+        "name": "monitors",
+        "type": "array",
+        "desc": "Optional per-URL settings that override the global ones.",
+        "optional": true
+      },
+      {
+        "name": "mode",
+        "type": "string",
+        "desc": "",
+        "optional": true
+      },
+      {
+        "name": "contentSelector",
+        "type": "string",
+        "desc": "CSS selector of the region to compare",
+        "optional": true
+      },
+      {
+        "name": "contentXPath",
+        "type": "string",
+        "desc": "XPath of the region to compare",
+        "optional": true
+      },
+      {
+        "name": "excludeSelectors",
+        "type": "array",
+        "desc": "",
+        "optional": true
+      },
+      {
+        "name": "ignorePatterns",
+        "type": "array",
+        "desc": "Regexes masked before comparing",
+        "optional": true
+      },
+      {
+        "name": "keywords",
+        "type": "array",
+        "desc": "",
+        "optional": true
+      },
+      {
+        "name": "keywordAlertOn",
+        "type": "string",
+        "desc": "",
+        "optional": true
+      },
+      {
+        "name": "trackPrices",
+        "type": "boolean",
+        "desc": "",
+        "optional": true
+      },
+      {
+        "name": "seoChecks",
+        "type": "boolean",
+        "desc": "",
+        "optional": true
+      },
+      {
+        "name": "checkRobotsTxt",
+        "type": "boolean",
+        "desc": "",
+        "optional": true
+      },
+      {
+        "name": "checkSitemap",
+        "type": "boolean",
+        "desc": "",
+        "optional": true
+      },
+      {
+        "name": "visualDiff",
+        "type": "boolean",
+        "desc": "",
+        "optional": true
+      },
+      {
+        "name": "visualThresholdPercent",
+        "type": "number",
+        "desc": "",
+        "optional": true
+      },
+      {
+        "name": "minChangePercent",
+        "type": "number",
+        "desc": "",
+        "optional": true
+      },
+      {
+        "name": "stateStoreName",
+        "type": "string",
+        "desc": "Your snapshot namespace (e.g. a project name); reuse it to compare with earlier calls.",
+        "optional": true
+      },
+      {
+        "name": "resetBaseline",
+        "type": "boolean",
+        "desc": "",
+        "optional": true
+      }
+    ]
+  },
+  {
+    "name": "fetch_clean_markdown",
+    "description": "Fetches public web pages and returns their main content as clean Markdown (no menus, ads, cookie banners or footers), plus title, author, published/modified dates, language, canonical URL, a heading outline and a ready-made citation. Tables stay Markdown tables; code blocks keep their language. Use it to read, quote or summarise a page or load documentation; cite citation.url. chunk:true returns heading-aware chunks for long pages; mode \"sitemap\"/\"crawl\" (with maxPages, includeGlobs like \"/docs/**\") reads several pages of one site; rendering \"auto\" only if a page comes back nearly empty. Respects publishers: obeys robots.txt, never bypasses paywalls, logins, CAPTCHAs or bot protection, honours noai/TDM opt-outs — such pages return status \"blocked\"/\"paywalled\" with a reason and NO content; do not retry them by other means. Runs an Apify Actor on the caller's own Apify account (billed by Apify pay-per-event, capped per run).",
+    "arguments": [
+      {
+        "name": "urls",
+        "type": "array",
+        "desc": "Page URLs (or site / sitemap URLs for mode sitemap/crawl)."
+      },
+      {
+        "name": "mode",
+        "type": "string",
+        "desc": "",
+        "optional": true
+      },
+      {
+        "name": "maxPages",
+        "type": "integer",
+        "desc": "Cap for sitemap/crawl modes.",
+        "optional": true
+      },
+      {
+        "name": "maxDepth",
+        "type": "integer",
+        "desc": "",
+        "optional": true
+      },
+      {
+        "name": "includeGlobs",
+        "type": "array",
+        "desc": "e.g. [\"/docs/**\"]",
+        "optional": true
+      },
+      {
+        "name": "excludeGlobs",
+        "type": "array",
+        "desc": "",
+        "optional": true
+      },
+      {
+        "name": "rendering",
+        "type": "string",
+        "desc": "",
+        "optional": true
+      },
+      {
+        "name": "contentSelector",
+        "type": "string",
+        "desc": "Optional CSS selector to force the content region.",
+        "optional": true
+      },
+      {
+        "name": "includeLinks",
+        "type": "boolean",
+        "desc": "Keep hyperlinks in the Markdown (false = fewer tokens).",
+        "optional": true
+      },
+      {
+        "name": "includeImages",
+        "type": "boolean",
+        "desc": "",
+        "optional": true
+      },
+      {
+        "name": "chunk",
+        "type": "boolean",
+        "desc": "",
+        "optional": true
+      },
+      {
+        "name": "chunkSize",
+        "type": "integer",
+        "desc": "",
+        "optional": true
+      },
+      {
+        "name": "chunkOverlap",
+        "type": "integer",
+        "desc": "",
+        "optional": true
+      },
+      {
+        "name": "maxCharsPerPage",
+        "type": "integer",
+        "desc": "Server-side truncation of markdown per page; truncatedForAgent=true when cut.",
+        "optional": true
+      }
+    ]
+  },
+  {
+    "name": "seo_rank_check",
+    "description": "Checks where domains rank in Google (or Brave) for a list of keywords by country, city, language and device, using the user's OWN SERP API key (DataForSEO, SerpApi, Serper.dev or Brave) configured on the server. Per keyword: organic position, ranking URL, change since the last run under the same projectName (rank history is saved in the caller's Apify storage), lost/gained alerts, top-10 results, SERP features (featured snippet owner, AI Overview present and whether it cites the domain, local pack, People Also Ask, ads count) and visibility/share-of-voice per domain. Can also pull real clicks/impressions/position from Google Search Console for a property the user owns. Does not scrape search engines. Use executionMode \"estimate\" first for large keyword lists. Without a key it returns clearly labelled SAMPLE data (isSampleData true) — never present that as real rankings. Runs an Apify Actor on the caller's own Apify account (billed by Apify pay-per-event, capped per run).",
+    "arguments": [
+      {
+        "name": "keywords",
+        "type": "array",
+        "desc": "Keywords; optional volume after a pipe: 'running shoes | 27100'",
+        "optional": true
+      },
+      {
+        "name": "targetDomains",
+        "type": "array",
+        "desc": "The user's domain(s), e.g. example.com"
+      },
+      {
+        "name": "competitorDomains",
+        "type": "array",
+        "desc": "",
+        "optional": true
+      },
+      {
+        "name": "provider",
+        "type": "string",
+        "desc": "",
+        "optional": true
+      },
+      {
+        "name": "locations",
+        "type": "array",
+        "desc": "",
+        "optional": true
+      },
+      {
+        "name": "devices",
+        "type": "array",
+        "desc": "",
+        "optional": true
+      },
+      {
+        "name": "depth",
+        "type": "integer",
+        "desc": "",
+        "optional": true
+      },
+      {
+        "name": "projectName",
+        "type": "string",
+        "desc": "Reuse the same name to get rank changes vs the previous run",
+        "optional": true
+      },
+      {
+        "name": "executionMode",
+        "type": "string",
+        "desc": "",
+        "optional": true
+      },
+      {
+        "name": "maxCostUsd",
+        "type": "number",
+        "desc": "Cap on provider spend (billed by the provider to the user)",
+        "optional": true
+      },
+      {
+        "name": "gscSiteUrl",
+        "type": "string",
+        "desc": "sc-domain:example.com or https://www.example.com/",
+        "optional": true
+      },
+      {
+        "name": "gscOnlyTrackedKeywords",
+        "type": "boolean",
+        "desc": "",
+        "optional": true
+      },
+      {
+        "name": "keywordIdeasSeeds",
+        "type": "array",
+        "desc": "DataForSEO only",
+        "optional": true
+      }
+    ]
+  },
+  {
+    "name": "search_traffic_diagnose",
+    "description": "Diagnoses a website's Google organic performance from its OWN Google Search Console and GA4 data (the user's Google credentials must be configured on the server; otherwise it returns fictional SAMPLE data and says so). Compares a current period with the previous period or the same period last year. Per property: headline deltas (clicks, impressions, CTR, position, sessions, organic sessions, key events, revenue), why clicks changed per losing page (ranking lost / CTR dropped / demand fell / page deindexed, confirmed via URL Inspection), striking-distance queries (positions 5-20), low-CTR pages, cannibalisation, sitemap errors, GA4 breakdowns, revenue at risk, tracking/consent red flags (e.g. GA4 organic sessions collapsing while Google clicks hold) and a ranked top-10 action list. Deterministic and rule-based. Use for \"why did our organic traffic drop?\", \"SEO quick wins?\" or \"is our GA4 tracking broken?\". Not legal advice. Runs an Apify Actor on the caller's own Apify account (billed by Apify pay-per-event, capped per run).",
+    "arguments": [
+      {
+        "name": "properties",
+        "type": "array",
+        "desc": ""
+      },
+      {
+        "name": "comparison",
+        "type": "string",
+        "desc": "",
+        "optional": true
+      },
+      {
+        "name": "periodDays",
+        "type": "integer",
+        "desc": "",
+        "optional": true
+      },
+      {
+        "name": "currentStartDate",
+        "type": "string",
+        "desc": "",
+        "optional": true
+      },
+      {
+        "name": "currentEndDate",
+        "type": "string",
+        "desc": "",
+        "optional": true
+      },
+      {
+        "name": "previousStartDate",
+        "type": "string",
+        "desc": "",
+        "optional": true
+      },
+      {
+        "name": "previousEndDate",
+        "type": "string",
+        "desc": "",
+        "optional": true
+      },
+      {
+        "name": "searchType",
+        "type": "string",
+        "desc": "",
+        "optional": true
+      },
+      {
+        "name": "brandTerms",
+        "type": "array",
+        "desc": "Brand words, excluded from opportunities and reported separately.",
+        "optional": true
+      },
+      {
+        "name": "maxUrlInspections",
+        "type": "integer",
+        "desc": "",
+        "optional": true
+      }
+    ]
+  },
+  {
+    "name": "google_ads_transparency",
+    "description": "Queries Google's OFFICIAL public ad-transparency datasets on BigQuery: which ads an advertiser runs on Google in the EEA and Turkey (creative IDs, format, first/last shown, regions, impression ranges, topic, payer), one summary per advertiser, or political/election ads with impression buckets, spend ranges and spend summaries by advertiser or region. Needs the user's Google Cloud service-account JSON configured on the server (BigQuery bills the user's project); without it returns fictitious SAMPLE rows (isSample true). ALWAYS call with estimateOnly:true first and tell the user the estimated GB/cost (1 TiB/month free tier) before a real run; if withinBudget is false, narrow the query rather than retrying. Data comes from Google's official public BigQuery datasets (no scraping). It does NOT include ad text, images, landing pages, or non-political ads outside the EEA/Turkey — never claim otherwise. Runs an Apify Actor on the caller's own Apify account (billed by Apify pay-per-event, capped per run).",
+    "arguments": [
+      {
+        "name": "mode",
+        "type": "string",
+        "desc": "",
+        "optional": true
+      },
+      {
+        "name": "billingProjectId",
+        "type": "string",
+        "desc": "",
+        "optional": true
+      },
+      {
+        "name": "advertiserNames",
+        "type": "array",
+        "desc": "contains-match on advertiser name",
+        "optional": true
+      },
+      {
+        "name": "advertiserIds",
+        "type": "array",
+        "desc": "",
+        "optional": true
+      },
+      {
+        "name": "domains",
+        "type": "array",
+        "desc": "heuristic: converted to a brand-name search",
+        "optional": true
+      },
+      {
+        "name": "regions",
+        "type": "array",
+        "desc": "ISO codes, e.g. FR, DE, EEA; political: GB, US, US-CA",
+        "optional": true
+      },
+      {
+        "name": "dateFrom",
+        "type": "string",
+        "desc": "",
+        "optional": true
+      },
+      {
+        "name": "dateTo",
+        "type": "string",
+        "desc": "",
+        "optional": true
+      },
+      {
+        "name": "formats",
+        "type": "array",
+        "desc": "",
+        "optional": true
+      },
+      {
+        "name": "topics",
+        "type": "array",
+        "desc": "",
+        "optional": true
+      },
+      {
+        "name": "advertiserLocations",
+        "type": "array",
+        "desc": "",
+        "optional": true
+      },
+      {
+        "name": "politicalGroupBy",
+        "type": "string",
+        "desc": "",
+        "optional": true
+      },
+      {
+        "name": "currency",
+        "type": "string",
+        "desc": "",
+        "optional": true
+      },
+      {
+        "name": "maxRows",
+        "type": "integer",
+        "desc": "",
+        "optional": true
+      },
+      {
+        "name": "maxGbBilled",
+        "type": "number",
+        "desc": "",
+        "optional": true
+      },
+      {
+        "name": "maxEstimatedCostUsd",
+        "type": "number",
+        "desc": "",
+        "optional": true
+      },
+      {
+        "name": "estimateOnly",
+        "type": "boolean",
+        "desc": "Default true: dry-run the query and report GB/cost first.",
+        "optional": true
+      }
+    ]
+  },
+  {
+    "name": "reviews_monitor",
+    "description": "Fetches reviews of the user's OWN business from official APIs (Google Business Profile, Trustpilot, Feefo, Yotpo, Yelp excerpts, legacy Facebook recommendations), using the user's credentials configured on the server (none configured = fictional SAMPLE data, flagged isSampleData). Returns new/updated reviews since the last check (state saved in the caller's Apify storage) or within a lookback window, normalised to 1-5 stars with reply status and a low-star flag, a template DRAFT reply for each unanswered review (never posted), and one analytics summary per location: star distribution, 30-day trend, response rate and median reply time, unanswered low-star count, top keywords and topic counts with average rating. Deterministic (no AI). Only the user's own businesses — refuse requests to monitor competitors. Nothing is ever posted. Reviewer names are omitted unless asked. Yelp rows are excerpts. Not legal advice. Runs an Apify Actor on the caller's own Apify account (billed by Apify pay-per-event, capped per run).",
+    "arguments": [
+      {
+        "name": "mode",
+        "type": "string",
+        "desc": "monitor = only new/changed since the last check; backfill = everything in the window",
+        "optional": true
+      },
+      {
+        "name": "lookbackDays",
+        "type": "integer",
+        "desc": "",
+        "optional": true
+      },
+      {
+        "name": "sinceDate",
+        "type": "string",
+        "desc": "",
+        "optional": true
+      },
+      {
+        "name": "platforms",
+        "type": "array",
+        "desc": "Restrict to these platforms (default: all configured)",
+        "optional": true
+      },
+      {
+        "name": "googleLocations",
+        "type": "array",
+        "desc": "",
+        "optional": true
+      },
+      {
+        "name": "trustpilotBusinessUnits",
+        "type": "array",
+        "desc": "Domain (example.com) or 24-character business-unit ID",
+        "optional": true
+      },
+      {
+        "name": "feefoMerchantIds",
+        "type": "array",
+        "desc": "",
+        "optional": true
+      },
+      {
+        "name": "yelpBusinessIds",
+        "type": "array",
+        "desc": "",
+        "optional": true
+      },
+      {
+        "name": "facebookPageId",
+        "type": "string",
+        "desc": "",
+        "optional": true
+      },
+      {
+        "name": "lowStarThreshold",
+        "type": "integer",
+        "desc": "",
+        "optional": true
+      },
+      {
+        "name": "includeReviewText",
+        "type": "boolean",
+        "desc": "",
+        "optional": true
+      },
+      {
+        "name": "includeReviewerNames",
+        "type": "boolean",
+        "desc": "Personal data; only when the user explicitly asks",
+        "optional": true
+      },
+      {
+        "name": "generateDraftReplies",
+        "type": "boolean",
+        "desc": "",
+        "optional": true
+      },
+      {
+        "name": "businessName",
+        "type": "string",
+        "desc": "",
+        "optional": true
+      },
+      {
+        "name": "draftContactLine",
+        "type": "string",
+        "desc": "",
+        "optional": true
+      },
+      {
+        "name": "customTopics",
+        "type": "array",
+        "desc": "Lines like 'Vegan menu: vegan, plant based'",
+        "optional": true
+      },
+      {
+        "name": "locationSummaries",
+        "type": "string",
+        "desc": "",
+        "optional": true
+      },
+      {
+        "name": "maxReviewsPerLocation",
+        "type": "integer",
+        "desc": "",
+        "optional": true
+      },
+      {
+        "name": "stateName",
+        "type": "string",
+        "desc": "Brand/project name for \"new since last time\" state.",
+        "optional": true
+      }
+    ]
+  },
+  {
+    "name": "find_local_businesses",
+    "description": "Finds local businesses by category and place, e.g. \"plumbers in Bristol\" or \"cafes near PL1 1AA\". Returns name, category, address, latitude/longitude, phone, website and domain, and (Google only) rating, review count, opening hours and business status. OpenStreetMap is the default source (free open data, ODbL — attribute \"© OpenStreetMap contributors\"). source \"google\" uses the official Google Places API (New) with the user's OWN Google Maps Platform key configured on the server (Google bills that key; respect googleBudgetUsd; show \"Google Maps\" attribution; do not store Google names/addresses beyond Google's terms). Without a key, Google requests return a cost estimate only. Never use this tool to collect personal data about individuals; e-mails and reviewer names are always off. Runs an Apify Actor on the caller's own Apify account (billed by Apify pay-per-event, capped per run).",
+    "arguments": [
+      {
+        "name": "queries",
+        "type": "array",
+        "desc": "\"<what> in <where>\", e.g. \"dentists in Leeds\""
+      },
+      {
+        "name": "source",
+        "type": "string",
+        "desc": "",
+        "optional": true
+      },
+      {
+        "name": "countryCode",
+        "type": "string",
+        "desc": "ISO 3166-1 alpha-2, e.g. gb",
+        "optional": true
+      },
+      {
+        "name": "lat",
+        "type": "string",
+        "desc": "",
+        "optional": true
+      },
+      {
+        "name": "lng",
+        "type": "string",
+        "desc": "",
+        "optional": true
+      },
+      {
+        "name": "radiusMeters",
+        "type": "integer",
+        "desc": "",
+        "optional": true
+      },
+      {
+        "name": "boundingBox",
+        "type": "string",
+        "desc": "south,west,north,east",
+        "optional": true
+      },
+      {
+        "name": "maxResultsPerQuery",
+        "type": "integer",
+        "desc": "",
+        "optional": true
+      },
+      {
+        "name": "googleFieldPreset",
+        "type": "string",
+        "desc": "",
+        "optional": true
+      },
+      {
+        "name": "googleBudgetUsd",
+        "type": "number",
+        "desc": "",
+        "optional": true
+      },
+      {
+        "name": "googleDryRun",
+        "type": "boolean",
+        "desc": "Only estimate the Google cost; make no Google calls.",
+        "optional": true
+      },
+      {
+        "name": "minRating",
+        "type": "number",
+        "desc": "",
+        "optional": true
+      },
+      {
+        "name": "minReviews",
+        "type": "integer",
+        "desc": "",
+        "optional": true
+      },
+      {
+        "name": "hasWebsite",
+        "type": "boolean",
+        "desc": "",
+        "optional": true
+      },
+      {
+        "name": "noWebsiteOnly",
+        "type": "boolean",
+        "desc": "",
+        "optional": true
+      },
+      {
+        "name": "hasPhone",
+        "type": "boolean",
+        "desc": "",
+        "optional": true
+      }
+    ]
+  },
+  {
+    "name": "company_registry_lookup",
+    "description": "Looks up companies in official open registries — US SEC EDGAR and the global GLEIF LEI index — by name, stock ticker, SEC CIK or LEI. Returns a normalised profile (identifiers, legal name, country, status, legal/HQ address, SIC industry, UK company number if any), the LEI-CIK link with confidence, the GLEIF corporate tree (direct/ultimate parent, subsidiaries), recent SEC filings with links, and key XBRL financials (revenue, net income, assets, equity, cash, shares) with fiscal periods and units. Use for KYB/due diligence, \"who owns X\", \"what is X's revenue\" or \"latest 8-K of X\". Data as published by SEC EDGAR and GLEIF (cite the links); not legal or financial advice. Runs an Apify Actor on the caller's own Apify account (billed by Apify pay-per-event, capped per run).",
+    "arguments": [
+      {
+        "name": "queries",
+        "type": "array",
+        "desc": "Company names, tickers (AAPL), CIKs (320193) or LEIs. Prefix name:/ticker:/cik:/lei: to force the type."
+      },
+      {
+        "name": "countries",
+        "type": "array",
+        "desc": "ISO country filter for name searches.",
+        "optional": true
+      },
+      {
+        "name": "sources",
+        "type": "array",
+        "desc": "",
+        "optional": true
+      },
+      {
+        "name": "maxResultsPerName",
+        "type": "integer",
+        "desc": "",
+        "optional": true
+      },
+      {
+        "name": "includeFilings",
+        "type": "boolean",
+        "desc": "",
+        "optional": true
+      },
+      {
+        "name": "filingForms",
+        "type": "array",
+        "desc": "e.g. [\"8-K\",\"10-K\",\"10-Q\"]; empty = all forms.",
+        "optional": true
+      },
+      {
+        "name": "maxFilingsPerCompany",
+        "type": "integer",
+        "desc": "",
+        "optional": true
+      },
+      {
+        "name": "includeFinancials",
+        "type": "boolean",
+        "desc": "",
+        "optional": true
+      },
+      {
+        "name": "financialYears",
+        "type": "integer",
+        "desc": "",
+        "optional": true
+      },
+      {
+        "name": "includeCorporateTree",
+        "type": "boolean",
+        "desc": "",
+        "optional": true
+      },
+      {
+        "name": "maxChildren",
+        "type": "integer",
+        "desc": "",
+        "optional": true
+      }
+    ]
+  },
+  {
+    "name": "sec_filing_watch",
+    "description": "Returns SEC filings (8-K, 10-K, 10-Q, 20-F, 6-K, S-1...) filed by the given companies since the previous call with the same watchName. The first call stores a baseline (optionally returning the last lookbackDays). Saves a private watch state in the caller's Apify storage. Use for \"anything new from X?\". Data as published by SEC EDGAR and GLEIF (cite the links); not legal or financial advice. Runs an Apify Actor on the caller's own Apify account (billed by Apify pay-per-event, capped per run).",
+    "arguments": [
+      {
+        "name": "companies",
+        "type": "array",
+        "desc": "Tickers or CIKs, e.g. [\"TSLA\",\"320193\"]"
+      },
+      {
+        "name": "forms",
+        "type": "array",
+        "desc": "Form types to watch; empty = all.",
+        "optional": true
+      },
+      {
+        "name": "watchName",
+        "type": "string",
+        "desc": "",
+        "optional": true
+      },
+      {
+        "name": "lookbackDays",
+        "type": "integer",
+        "desc": "",
+        "optional": true
+      }
+    ]
+  },
+  {
+    "name": "sec_full_text_search",
+    "description": "Searches the text of SEC filings since 2001 for a word or \"exact phrase\", optionally by form type, date range and company. Returns one record per matching filing with links to the matching documents. Data as published by SEC EDGAR and GLEIF (cite the links); not legal or financial advice. Runs an Apify Actor on the caller's own Apify account (billed by Apify pay-per-event, capped per run).",
+    "arguments": [
+      {
+        "name": "query",
+        "type": "string",
+        "desc": "Word or \"exact phrase\", e.g. \"going concern\" aviation"
+      },
+      {
+        "name": "forms",
+        "type": "array",
+        "desc": "",
+        "optional": true
+      },
+      {
+        "name": "from",
+        "type": "string",
+        "desc": "",
+        "optional": true
+      },
+      {
+        "name": "to",
+        "type": "string",
+        "desc": "",
+        "optional": true
+      },
+      {
+        "name": "companies",
+        "type": "array",
+        "desc": "",
+        "optional": true
+      },
+      {
+        "name": "maxResults",
+        "type": "integer",
+        "desc": "",
+        "optional": true
+      }
+    ]
+  },
+  {
+    "name": "find_public_tenders",
+    "description": "Searches official UK and EU public-sector procurement notices — tenders, planned procurements, contract awards and changes — from Find a Tender (Procurement Act 2023), Contracts Finder, Public Contracts Scotland, Sell2Wales and EU TED. Filter by keywords, CPV codes (or plain-English terms converted to CPV), buyer, UK region/NUTS/postcode, EU country, value range, notice type, open-now / closing-within-N-days and publication dates. Returns title, buyer, value, CPV, location, deadline, documents, notice URL, lots and award winners (organisations). mode \"closingSoon\" = deadlines in the next N days; noticeTypes [\"award\"] = who won what. Data is OGL / EU-reuse licensed: cite noticeUrl and attribution. Contact details of individuals are never returned. Not legal or procurement advice. For interactive use prefer sources [\"fts\"] and tight filters (multi-source searches can take minutes). Runs an Apify Actor on the caller's own Apify account (billed by Apify pay-per-event, capped per run).",
+    "arguments": [
+      {
+        "name": "keywords",
+        "type": "array",
+        "desc": "",
+        "optional": true
+      },
+      {
+        "name": "keywordMatch",
+        "type": "string",
+        "desc": "",
+        "optional": true
+      },
+      {
+        "name": "excludeKeywords",
+        "type": "array",
+        "desc": "",
+        "optional": true
+      },
+      {
+        "name": "cpvCodes",
+        "type": "array",
+        "desc": "CPV codes; prefix match (\"72\" = all IT services).",
+        "optional": true
+      },
+      {
+        "name": "cpvKeywords",
+        "type": "array",
+        "desc": "Plain-English terms converted to CPV codes (e.g. \"cleaning\", \"website\").",
+        "optional": true
+      },
+      {
+        "name": "buyers",
+        "type": "array",
+        "desc": "",
+        "optional": true
+      },
+      {
+        "name": "regions",
+        "type": "array",
+        "desc": "UK region names or NUTS/ITL codes (London, Scotland, UKI3, TLM, DE1).",
+        "optional": true
+      },
+      {
+        "name": "postcodes",
+        "type": "array",
+        "desc": "",
+        "optional": true
+      },
+      {
+        "name": "tedCountries",
+        "type": "array",
+        "desc": "",
+        "optional": true
+      },
+      {
+        "name": "minValue",
+        "type": "integer",
+        "desc": "",
+        "optional": true
+      },
+      {
+        "name": "maxValue",
+        "type": "integer",
+        "desc": "",
+        "optional": true
+      },
+      {
+        "name": "noticeTypes",
+        "type": "array",
+        "desc": "",
+        "optional": true
+      },
+      {
+        "name": "openOnly",
+        "type": "boolean",
+        "desc": "",
+        "optional": true
+      },
+      {
+        "name": "closingWithinDays",
+        "type": "integer",
+        "desc": "",
+        "optional": true
+      },
+      {
+        "name": "mode",
+        "type": "string",
+        "desc": "",
+        "optional": true
+      },
+      {
+        "name": "lookbackDays",
+        "type": "integer",
+        "desc": "",
+        "optional": true
+      },
+      {
+        "name": "publishedFrom",
+        "type": "string",
+        "desc": "",
+        "optional": true
+      },
+      {
+        "name": "publishedTo",
+        "type": "string",
+        "desc": "",
+        "optional": true
+      },
+      {
+        "name": "sources",
+        "type": "array",
+        "desc": "",
+        "optional": true
+      },
+      {
+        "name": "sortBy",
+        "type": "string",
+        "desc": "",
+        "optional": true
+      },
+      {
+        "name": "maxResults",
+        "type": "integer",
+        "desc": "",
+        "optional": true
+      }
+    ]
+  },
+  {
+    "name": "sanctions_screen",
+    "description": "Screens people, companies, vessels or aircraft against the official UK Sanctions List (FCDO), UN Security Council Consolidated List, EU consolidated financial sanctions list and US OFAC SDN + non-SDN lists. Returns per input a status (STRONG_POTENTIAL_MATCH / POTENTIAL_MATCH / NO_MATCH), the best scores, matched designations with programme, listing date, DOB, nationality, identifiers and a plain-English explanation, plus the list versions used (always cite listsScreened). Pass DOB and country when known to reduce false positives. For KYC/KYB/supplier/vessel checks. Decision support only — never say someone \"is sanctioned\" or \"is cleared\". Say \"potential match, needs human review\" or \"no match against <list versions>\". Does not cover PEPs, adverse media or ownership/control. Not legal advice. Runs an Apify Actor on the caller's own Apify account (billed by Apify pay-per-event, capped per run).",
+    "arguments": [
+      {
+        "name": "queries",
+        "type": "array",
+        "desc": ""
+      },
+      {
+        "name": "lists",
+        "type": "array",
+        "desc": "",
+        "optional": true
+      },
+      {
+        "name": "matchPreset",
+        "type": "string",
+        "desc": "",
+        "optional": true
+      },
+      {
+        "name": "maxMatchesPerName",
+        "type": "integer",
+        "desc": "",
+        "optional": true
+      }
+    ]
+  },
+  {
+    "name": "validate_vat_or_company_number",
+    "description": "Validates EU, UK (GB) and Northern Ireland (XI) VAT numbers, UK company numbers (Companies House) and LEIs. Format and check digits are checked locally first; plausible numbers go to the official registry: EU VIES (27 states + XI), HMRC for GB and Companies House for UK companies (both need the user's own credentials configured on the server; without them those numbers come back not_checked), GLEIF for LEIs. Returns registry_status (valid | invalid | unavailable | error | not_checked), the registered name and address, name_match_score when you pass the counterparty name, a consultation number when the user's own VAT number is given, and a timestamped evidence record. \"unavailable\" = a member-state database was down: not charged, retry later, do NOT treat as invalid. A valid checksum does NOT mean registered — only registry_status valid does. checkMode \"format_only\" = cheap bulk clean-up with no registry calls. Use only for counterparties the user has a legitimate reason to verify (sole-trader names are personal data). Not legal or tax advice. Runs an Apify Actor on the caller's own Apify account (billed by Apify pay-per-event, capped per run).",
+    "arguments": [
+      {
+        "name": "numbers",
+        "type": "array",
+        "desc": "One per entry: \"NUMBER | optional name | optional reference\", e.g. \"DE136695976 | Acme GmbH | INV-7\". VAT numbers need a country prefix (EL for Greece, GB, XI) unless defaultCountry is set."
+      },
+      {
+        "name": "checkMode",
+        "type": "string",
+        "desc": "",
+        "optional": true
+      },
+      {
+        "name": "numberType",
+        "type": "string",
+        "desc": "",
+        "optional": true
+      },
+      {
+        "name": "defaultCountry",
+        "type": "string",
+        "desc": "VAT prefix for numbers without one",
+        "optional": true
+      },
+      {
+        "name": "viesRequesterVat",
+        "type": "string",
+        "desc": "User's own EU/XI VAT number, to obtain VIES consultation numbers",
+        "optional": true
+      },
+      {
+        "name": "hmrcRequesterVrn",
+        "type": "string",
+        "desc": "User's own UK VRN, to obtain HMRC consultation numbers",
+        "optional": true
+      },
+      {
+        "name": "leiEnrichment",
+        "type": "boolean",
+        "desc": "",
+        "optional": true
+      },
+      {
+        "name": "includeRegisteredDetails",
+        "type": "boolean",
+        "desc": "",
+        "optional": true
+      }
+    ]
+  },
+  {
+    "name": "extract_pdf_invoice",
+    "description": "Extracts structured data from PDF invoices, receipts, credit notes and reports given their URLs: supplier name, supplier VAT number (format/check digit validated, not a registry lookup), invoice number, issue/due dates (ISO), currency, net/VAT/gross totals, line items (description, quantity, unit price, VAT rate, amount), a 0-1 confidence per field, arithmetic checks (line sum = net, net + VAT = gross, qty x price = amount), validation issues, and detected tables as Markdown. Deterministic (no LLM); UK and EU number/date formats; labels in English, German, French, Dutch, Spanish and Italian. Scanned PDFs need enableOcr:true (slower). Password-protected or corrupt files are reported, not charged. Check issues and fieldConfidence before trusting values; use validate_vat_or_company_number to confirm a VAT number is registered. URLs must be public or pre-signed http(s) links. Runs an Apify Actor on the caller's own Apify account (billed by Apify pay-per-event, capped per run).",
+    "arguments": [
+      {
+        "name": "pdfUrls",
+        "type": "array",
+        "desc": "Public or pre-signed http(s) URLs of PDF files."
+      },
+      {
+        "name": "invoiceMode",
+        "type": "string",
+        "desc": "auto = invoice fields only for invoice-like documents; off = text and tables only.",
+        "optional": true
+      },
+      {
+        "name": "extractTables",
+        "type": "boolean",
+        "desc": "",
+        "optional": true
+      },
+      {
+        "name": "includeText",
+        "type": "boolean",
+        "desc": "Return full layout text (can be long).",
+        "optional": true
+      },
+      {
+        "name": "enableOcr",
+        "type": "boolean",
+        "desc": "OCR scanned pages (slower, higher price).",
+        "optional": true
+      },
+      {
+        "name": "ocrLanguages",
+        "type": "string",
+        "desc": "e.g. eng, eng+deu",
+        "optional": true
+      },
+      {
+        "name": "numberFormat",
+        "type": "string",
+        "desc": "",
+        "optional": true
+      },
+      {
+        "name": "dateOrder",
+        "type": "string",
+        "desc": "",
+        "optional": true
+      },
+      {
+        "name": "maxPagesPerDocument",
+        "type": "integer",
+        "desc": "",
+        "optional": true
+      }
+    ]
+  },
+  {
+    "name": "flight_fare_scan",
+    "description": "Scans flight prices for one or more routes over the coming months: per route and departure month the cheapest fare, the cheapest departure dates (top 5 calendar days) and how the price compares with the route's usual level. With the user's own Duffel token it also returns live airline offers in any cabin for the cheapest dates or exact dates, and flags unusually cheap fares (30%+ below normal, STRONG at 45%, or business at <=1.3x economy). Uses the END USER's own Travelpayouts/Duffel tokens configured on the server; without them the Actor returns clearly labelled SAMPLE data. Use flight_fare_estimate first for large scans. Search only — no booking. Calendar prices are cached (up to ~7 days old); live offers can change within minutes, so re-check before buying. Not financial advice. Runs an Apify Actor on the caller's own Apify account (billed by Apify pay-per-event, capped per run).",
+    "arguments": [
+      {
+        "name": "routes",
+        "type": "array",
+        "desc": "IATA airport or city pairs, e.g. LHR-JFK, LON-BKK."
+      },
+      {
+        "name": "tripType",
+        "type": "string",
+        "desc": "",
+        "optional": true
+      },
+      {
+        "name": "startMonth",
+        "type": "string",
+        "desc": "First departure month (YYYY-MM); default next month.",
+        "optional": true
+      },
+      {
+        "name": "monthsAhead",
+        "type": "integer",
+        "desc": "",
+        "optional": true
+      },
+      {
+        "name": "cabins",
+        "type": "array",
+        "desc": "",
+        "optional": true
+      },
+      {
+        "name": "exactDates",
+        "type": "array",
+        "desc": "Live searches: \"LHR-JFK 2026-12-10 2026-12-17\" or \"LHR-JFK 2026-12-10\".",
+        "optional": true
+      },
+      {
+        "name": "liveCheckCheapestDates",
+        "type": "boolean",
+        "desc": "Confirm the cheapest calendar dates with live offers (needs the user's Duffel token).",
+        "optional": true
+      },
+      {
+        "name": "maxLiveSearches",
+        "type": "integer",
+        "desc": "",
+        "optional": true
+      },
+      {
+        "name": "directOnly",
+        "type": "boolean",
+        "desc": "",
+        "optional": true
+      },
+      {
+        "name": "currency",
+        "type": "string",
+        "desc": "",
+        "optional": true
+      }
+    ]
+  },
+  {
+    "name": "flight_fare_estimate",
+    "description": "Before a flight_fare_scan, shows how many API calls and live searches it would make and the maximum charge. No fare searches are made. Same input as flight_fare_scan. Runs an Apify Actor on the caller's own Apify account (billed by Apify pay-per-event, capped per run).",
+    "arguments": [
+      {
+        "name": "routes",
+        "type": "array",
+        "desc": "IATA airport or city pairs, e.g. LHR-JFK, LON-BKK."
+      },
+      {
+        "name": "tripType",
+        "type": "string",
+        "desc": "",
+        "optional": true
+      },
+      {
+        "name": "startMonth",
+        "type": "string",
+        "desc": "First departure month (YYYY-MM); default next month.",
+        "optional": true
+      },
+      {
+        "name": "monthsAhead",
+        "type": "integer",
+        "desc": "",
+        "optional": true
+      },
+      {
+        "name": "cabins",
+        "type": "array",
+        "desc": "",
+        "optional": true
+      },
+      {
+        "name": "exactDates",
+        "type": "array",
+        "desc": "Live searches: \"LHR-JFK 2026-12-10 2026-12-17\" or \"LHR-JFK 2026-12-10\".",
+        "optional": true
+      },
+      {
+        "name": "liveCheckCheapestDates",
+        "type": "boolean",
+        "desc": "Confirm the cheapest calendar dates with live offers (needs the user's Duffel token).",
+        "optional": true
+      },
+      {
+        "name": "maxLiveSearches",
+        "type": "integer",
+        "desc": "",
+        "optional": true
+      },
+      {
+        "name": "directOnly",
+        "type": "boolean",
+        "desc": "",
+        "optional": true
+      },
+      {
+        "name": "currency",
+        "type": "string",
+        "desc": "",
+        "optional": true
+      }
+    ]
+  },
+  {
+    "name": "flight_deal_alerts",
+    "description": "Finds current cheap flight deals and mistake (error) fares from public deal-site feeds (Fly4free, The Flight Deal, Travel-Dealz, HolidayPirates, Head for Points, Turning Left for Less, Live from a Lounge, ET TravelWorld, optionally Secret Flying). Filter by departure airports, cities or countries (LON, MAN, DEL, \"India\"), destinations or regions, cabin and max price. Each deal has the route, posted price and currency, cabin, trip type, sample dates/months when stated, an error-fare flag, a 0-100 plausibility score and a link to the original post with the publisher credited; duplicates across sites are merged. Prices are as posted and may have expired: always tell the user to open the original post and check before booking. Show the summary, the link and the source name; do not reproduce article text. Runs an Apify Actor on the caller's own Apify account (billed by Apify pay-per-event, capped per run).",
+    "arguments": [
+      {
+        "name": "origins",
+        "type": "array",
+        "desc": "Departure IATA city/airport codes, city or country names, ISO country codes. Empty = anywhere.",
+        "optional": true
+      },
+      {
+        "name": "destinations",
+        "type": "array",
+        "desc": "",
+        "optional": true
+      },
+      {
+        "name": "destinationRegions",
+        "type": "array",
+        "desc": "",
+        "optional": true
+      },
+      {
+        "name": "cabins",
+        "type": "array",
+        "desc": "",
+        "optional": true
+      },
+      {
+        "name": "maxPrice",
+        "type": "integer",
+        "desc": "",
+        "optional": true
+      },
+      {
+        "name": "currency",
+        "type": "string",
+        "desc": "",
+        "optional": true
+      },
+      {
+        "name": "errorFaresOnly",
+        "type": "boolean",
+        "desc": "",
+        "optional": true
+      },
+      {
+        "name": "minScore",
+        "type": "integer",
+        "desc": "",
+        "optional": true
+      },
+      {
+        "name": "maxAgeDays",
+        "type": "integer",
+        "desc": "",
+        "optional": true
+      },
+      {
+        "name": "maxDeals",
+        "type": "integer",
+        "desc": "",
+        "optional": true
+      },
+      {
+        "name": "includeSecretFlying",
+        "type": "boolean",
+        "desc": "Adds Secret Flying to the default sources.",
+        "optional": true
+      }
+    ]
+  },
+  {
+    "name": "check_flight_compensation",
+    "description": "Decides whether a disrupted flight is owed fixed compensation under UK261 (UK) or EU261 (EU/EEA/Switzerland). Give airports, the operating airline and the arrival delay, the cancellation notice or the denied-boarding facts (provider \"none\", default). Or give a flight number and date with provider set to the user's flight-data service (their own key must be configured on the server) to look up the times. Returns yes/no/maybe, the amount (GBP £220/£350/£520 or EUR €250/€400/€600, incl. 50% reductions), the regime to claim under, reasons with cited articles and court cases, right to care, the claim deadline and links to the airline claim page and CAA/ADR guidance. Relay headline and reasons; on \"maybe\" ask for what the reasons say is missing. Use ICAO airline codes (EZY, BAW) when an IATA code is shared. Never scrapes websites. Rules-based guidance, not legal advice. It cannot verify the airline's stated cause (\"extraordinary circumstances\") and never presents that classification as fact. Runs an Apify Actor on the caller's own Apify account (billed by Apify pay-per-event, capped per run).",
+    "arguments": [
+      {
+        "name": "claims",
+        "type": "array",
+        "desc": ""
+      },
+      {
+        "name": "provider",
+        "type": "string",
+        "desc": "\"none\" = use the facts given. Other values need the user's provider key configured on the server.",
+        "optional": true
+      },
+      {
+        "name": "aerodataboxGateway",
+        "type": "string",
+        "desc": "",
+        "optional": true
+      }
+    ]
+  },
+  {
+    "name": "visa_entry_check",
+    "description": "Checks whether a traveller needs a visa, eVisa, visa on arrival or an electronic travel authorisation (ETA/eTA/ESTA/ETIAS-type) to enter a country, using only official government sources. Covers British citizens for ~226 destinations (GOV.UK FCDO) and any nationality for the UK, the 30 countries applying the EU visa list (Schengen + Cyprus), Canada, Australia and India. Returns the requirement category, maximum stay, what to apply for with the official link, passport-validity/transit/health notes, the official source URL with fetched date and content hash, and a confidence level. Returns category \"unknown\" when no official source covers the pair (tell the user to check the embassy — never fill the gap from memory). Give either checks (pairs) or trip (travellers + itinerary with transit stops). Quote summary and the source link. Not immigration advice: always confirm with the official source and the airline before travelling. Runs an Apify Actor on the caller's own Apify account (billed by Apify pay-per-event, capped per run).",
+    "arguments": [
+      {
+        "name": "checks",
+        "type": "array",
+        "desc": "",
+        "optional": true
+      },
+      {
+        "name": "trip",
+        "type": "object",
+        "desc": "Alternative to checks: per-traveller checklist for an itinerary.",
+        "optional": true
+      }
+    ]
+  },
+  {
+    "name": "uk_property_data",
+    "description": "Official UK property data for a postcode, outcode, street, town/district/county or map point: HM Land Registry Price Paid sold prices (England & Wales) with price, date, address, type, tenure and new-build flag; a free summary per search (median/mean/quartiles, splits by type/tenure/new-build, monthly trend, local UK House Price Index context); planning constraints (England) for a full postcode or point — conservation area, listed buildings within a radius, Article 4, flood zone 2/3, tree preservation, green belt, AONB/National Landscape, World Heritage Site; and optional EPC certificates when the user's own EPC token is configured and a permitted purpose is given (EPC address data may only be used for energy-efficiency purposes). Prefer summaryOnly:true for \"what do houses sell for in X\" (cheaper). Report coverage dates and notes. Never use it to profile or contact individual homeowners (the data has no owner names). Not valuation, legal or financial advice. \"No planning constraint found\" is not a guarantee — confirm with the local planning authority. Sold prices cover England & Wales only. Contains HM Land Registry data © Crown copyright and database right (OGL v3.0). Runs an Apify Actor on the caller's own Apify account (billed by Apify pay-per-event, capped per run).",
+    "arguments": [
+      {
+        "name": "searches",
+        "type": "array",
+        "desc": "Postcode 'PL4 7LG', sector 'PL4 7', outcode 'PL4', 'Street, Town', 'town:NAME' / 'district:NAME' / 'county:NAME', or 'point:lat,lng'."
+      },
+      {
+        "name": "dateFrom",
+        "type": "string",
+        "desc": "Default: 2 years ago",
+        "optional": true
+      },
+      {
+        "name": "dateTo",
+        "type": "string",
+        "desc": "Default: yesterday",
+        "optional": true
+      },
+      {
+        "name": "propertyTypes",
+        "type": "array",
+        "desc": "D detached, S semi, T terraced, F flat, O other",
+        "optional": true
+      },
+      {
+        "name": "tenure",
+        "type": "array",
+        "desc": "",
+        "optional": true
+      },
+      {
+        "name": "newBuild",
+        "type": "string",
+        "desc": "",
+        "optional": true
+      },
+      {
+        "name": "minPrice",
+        "type": "integer",
+        "desc": "",
+        "optional": true
+      },
+      {
+        "name": "maxPrice",
+        "type": "integer",
+        "desc": "",
+        "optional": true
+      },
+      {
+        "name": "maxTransactionsPerSearch",
+        "type": "integer",
+        "desc": "",
+        "optional": true
+      },
+      {
+        "name": "summaryOnly",
+        "type": "boolean",
+        "desc": "Only summaries (free) and planning checks; no individual sales.",
+        "optional": true
+      },
+      {
+        "name": "includePlanning",
+        "type": "boolean",
+        "desc": "",
+        "optional": true
+      },
+      {
+        "name": "planningRadiusMetres",
+        "type": "integer",
+        "desc": "",
+        "optional": true
+      },
+      {
+        "name": "includeEpc",
+        "type": "boolean",
+        "desc": "",
+        "optional": true
+      },
+      {
+        "name": "epcPurpose",
+        "type": "string",
+        "desc": "",
+        "optional": true
+      }
+    ]
+  },
+  {
+    "name": "get_run_results",
+    "description": "Fetches the status and results of a run that was still \"running\" when a SiteVerdict data tool returned (by runId and tool name). Does not start a new run and costs nothing extra.",
+    "arguments": [
+      {
+        "name": "runId",
+        "type": "string",
+        "desc": "run.runId from an earlier result"
+      },
+      {
+        "name": "tool",
+        "type": "string",
+        "desc": "Which tool produced the run"
+      }
+    ]
+  }
+]

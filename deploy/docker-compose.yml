@@ -1,0 +1,35 @@
+# FUTURE, OWNER-APPROVED remote deploy (not started by the build).
+#   docker compose -f deploy/docker-compose.yml --env-file .env up -d --build
+# Binds to 127.0.0.1 on the host; put TLS (nginx/Caddy/Cloudflare Tunnel) in front: see deploy/nginx-mcp.webrevenuescan.com.conf.example
+services:
+  siteverdict-mcp:
+    build: { context: .., dockerfile: Dockerfile }
+    command: ["--http"]
+    restart: unless-stopped
+    read_only: true
+    tmpfs: ["/tmp"]
+    cap_drop: ["ALL"]
+    security_opt: ["no-new-privileges:true"]
+    mem_limit: 512m
+    pids_limit: 256
+    environment:
+      NODE_ENV: production
+      SITEVERDICT_HTTP_HOST: 0.0.0.0          # inside the container only; host port below is loopback
+      SITEVERDICT_HTTP_PORT: "3333"
+      SITEVERDICT_TRUST_PROXY: "1"
+      SITEVERDICT_PUBLIC_URL: ${SITEVERDICT_PUBLIC_URL}
+      SITEVERDICT_OAUTH_ENABLED: ${SITEVERDICT_OAUTH_ENABLED:-1}
+      SITEVERDICT_OAUTH_KEYS: ${SITEVERDICT_OAUTH_KEYS}
+      SITEVERDICT_OAUTH_REDIRECT_HOSTS: ${SITEVERDICT_OAUTH_REDIRECT_HOSTS:-}
+      SITEVERDICT_ALLOWED_HOSTS: ${SITEVERDICT_ALLOWED_HOSTS}
+      SITEVERDICT_ALLOWED_ORIGINS: ${SITEVERDICT_ALLOWED_ORIGINS:-}
+      SITEVERDICT_TOOLSETS: ${SITEVERDICT_TOOLSETS:-web}
+      SITEVERDICT_ALLOW_API_KEYS: ${SITEVERDICT_ALLOW_API_KEYS:-1}
+      SITEVERDICT_OPENAI_APPS_CHALLENGE: ${SITEVERDICT_OPENAI_APPS_CHALLENGE:-}
+    ports:
+      - "127.0.0.1:3333:3333"
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:3333/healthz').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"]
+      interval: 30s
+      timeout: 5s
+      retries: 3

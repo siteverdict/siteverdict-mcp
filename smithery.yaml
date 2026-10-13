@@ -1,0 +1,37 @@
+# Smithery — LEGACY build config, kept for compatibility. Smithery's 2026 docs no longer document smithery.yaml.
+# Current Smithery paths (see marketplace/CHECKLIST.md):
+#   local/stdio : publish the MCPB bundle  ->  npx @smithery/cli mcp publish ./siteverdict.mcpb -n siteverdict/siteverdict
+#   remote/HTTP : publish the public URL   ->  npx @smithery/cli mcp publish "https://mcp.webrevenuescan.com/mcp" -n siteverdict/siteverdict --config-schema '<json>'
+runtime: typescript
+startCommand:
+  type: stdio
+  configSchema:
+    type: object
+    required: [apifyToken]
+    properties:
+      apifyToken:
+        type: string
+        title: Apify API token
+        description: Your Apify token (scans run and are billed on your Apify account).
+      dryRun:
+        type: boolean
+        default: false
+        description: Return built-in sample data instead of running Apify Actors.
+      maxChargeUsd:
+        type: number
+        default: 2
+        description: Spend cap per Actor run (USD).
+  commandFunction: |-
+    (config) => ({
+      command: 'npx',
+      args: ['-y', '@siteverdict/mcp'],
+      env: {
+        APIFY_TOKEN: config.apifyToken,
+        SITEVERDICT_DRY_RUN: config.dryRun ? '1' : '0',
+        SITEVERDICT_DEFAULT_MAX_CHARGE_USD: String(config.maxChargeUsd ?? 2)
+      }
+    })
+  exampleConfig:
+    apifyToken: apify_api_xxxxxxxxxxxxxxxx
+    dryRun: true
+    maxChargeUsd: 2

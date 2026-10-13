@@ -1,0 +1,21 @@
+{
+  "$comment": "SINGLE SOURCE OF TRUTH for the brand. Edit here, then run `npm run brand:sync` to propagate to package.json, server.json, smithery.yaml, glama.json, Dockerfile labels and docs. src/brand.ts re-exports this as the BRAND constant.",
+  "name": "SiteVerdict",
+  "displayName": "SiteVerdict — Website Audit Tools",
+  "slug": "siteverdict",
+  "npmPackage": "@siteverdict/mcp",
+  "binName": "siteverdict-mcp",
+  "registryName": "io.github.siteverdict/siteverdict",
+  "githubOwner": "siteverdict",
+  "githubRepo": "siteverdict-mcp",
+  "apifyUsername": "siteverdict",
+  "actorPrefix": "siteverdict-",
+  "website": "https://tools.webrevenuescan.com",
+  "supportEmail": "aman.thakran@bharatfare.com",
+  "uriScheme": "siteverdict",
+  "tagline": "Website revenue-leak audits for AI agents: tracking & consent, speed & revenue, WCAG accessibility, domain/email health and AI-search readiness.",
+  "company": "BharatFare Travel and Technologies Ltd",
+  "companyLocation": "Plymouth, United Kingdom",
+  "owner": "Aman Thakran",
+  "mcpPublicUrl": "https://mcp.webrevenuescan.com/mcp"
+}

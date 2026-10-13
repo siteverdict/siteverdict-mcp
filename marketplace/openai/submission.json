@@ -1,0 +1,21 @@
+{
+  "$comment": "DRAFT for platform.openai.com/plugins (ChatGPT app directory). Field names follow https://developers.openai.com/apps-sdk/deploy/submission as read on 11 Oct 2026; re-check the live form. NOT submitted.",
+  "displayName": "SiteVerdict Website Audit",
+  "shortDescription": "Fix plan for your website",
+  "longDescription": "SiteVerdict audits any public website and turns the results into one prioritised fix plan you can act on this week.\n\nAsk things like \"audit example.com and tell me what to fix first\", \"is my cookie banner GDPR-compliant?\", \"why is my mobile site slow?\" or \"can ChatGPT read and cite my site?\".\n\nWhat it checks:\n- Tracking and cookie consent: tags that fire before consent or after Reject, Google Consent Mode v2, broken analytics tags.\n- Speed: Core Web Vitals and page weight, with an estimate of revenue lost to slow pages when you share your traffic and order value.\n- Accessibility: WCAG 2.2 checks mapped to the European Accessibility Act.\n- Domain and email health: SPF, DKIM, DMARC, TLS and DNS hygiene, with the exact records to add.\n- AI-search readiness: AI crawler access, llms.txt, structured data.\n- Tech stack, page changes/uptime and clean Markdown of any public page with a citation.\n\nResults show as a score card with the top fixes. Checks are read-only: nothing on your website is changed. Scans run as Apify Actors on your own Apify account, which you connect when you sign in; each scan has a spend cap. Automated checks find many issues but not all and are not legal advice.\n\nOperated by BharatFare Travel and Technologies Ltd (UK).",
+  "category": "TODO-owner (suggest Productivity or Developer tools)",
+  "mcpServerUrl": "https://mcp.webrevenuescan.com/mcp",
+  "websiteURL": "https://tools.webrevenuescan.com",
+  "supportURL": "mailto:aman.thakran@bharatfare.com",
+  "privacyPolicyURL": "https://tools.webrevenuescan.com/privacy",
+  "termsOfServiceURL": "https://tools.webrevenuescan.com/terms",
+  "logo": "marketplace/assets/icon-512.png",
+  "demo_recording_url": "TODO-owner",
+  "authentication": {
+    "type": "oauth2",
+    "client_registration": "CIMD (preferred) or DCR fallback — both supported by the built-in authorization server",
+    "redirect_uri_expected": "https://chatgpt.com/connector_platform_oauth_redirect (RFC 9207 iss is returned)",
+    "reviewer_credentials": "TODO-owner: dedicated Apify account token with a low spend limit, no MFA needed to paste it on the consent page"
+  },
+  "testCases": "see TEST-CASES.md (5 positive, 3 negative)"
+}

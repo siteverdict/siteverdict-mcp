@@ -1,0 +1,88 @@
+{
+  "name": "@siteverdict/mcp",
+  "version": "0.2.0",
+  "description": "SiteVerdict MCP server: website audit tools for AI agents (tracking & consent, speed & revenue, WCAG accessibility, domain/email health, AI-search readiness) powered by Apify Actors.",
+  "mcpName": "io.github.siteverdict/siteverdict",
+  "type": "module",
+  "license": "MIT",
+  "private": true,
+  "author": "Aman Thakran",
+  "homepage": "https://github.com/siteverdict/siteverdict-mcp#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/siteverdict/siteverdict-mcp.git"
+  },
+  "bugs": {
+    "url": "https://github.com/siteverdict/siteverdict-mcp/issues"
+  },
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "mcp-server",
+    "website-audit",
+    "gdpr",
+    "cookie-consent",
+    "core-web-vitals",
+    "wcag",
+    "accessibility",
+    "dmarc",
+    "spf",
+    "ai-search",
+    "llms-txt",
+    "apify"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "bin": {
+    "siteverdict-mcp": "dist/cli.js"
+  },
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "brand.json",
+    "README.md",
+    "PRIVACY.md",
+    "TERMS.md"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json && node scripts/postbuild.mjs",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "lint": "eslint .",
+    "test": "node --import tsx --test test/*.test.ts",
+    "smoke": "npm run build && node scripts/smoke.mjs",
+    "check": "npm run typecheck && npm run lint && npm test && npm run smoke",
+    "start": "node dist/cli.js",
+    "start:http": "node dist/cli.js --http",
+    "dev": "tsx src/cli.ts",
+    "inspector": "npx -y @modelcontextprotocol/inspector@2.10.1 -e SITEVERDICT_DRY_RUN=1 node dist/cli.js",
+    "brand:sync": "node scripts/brand-sync.mjs",
+    "export:tools": "node scripts/export-tools.mjs",
+    "mcpb:pack": "npm run build && npx -y @anthropic-ai/mcpb@2.1.2 pack . siteverdict.mcpb",
+    "prepublishOnly": "npm run check"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/node": "2.1.1",
+    "@modelcontextprotocol/server": "2.3.1",
+    "zod": "4.6.5"
+  },
+  "devDependencies": {
+    "@eslint/js": "10.0.1",
+    "@modelcontextprotocol/client": "2.3.1",
+    "@types/node": "20.19.43",
+    "eslint": "10.11.0",
+    "tsx": "4.23.15",
+    "typescript": "5.9.3",
+    "typescript-eslint": "8.71.1"
+  }
+}

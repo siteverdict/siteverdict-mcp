@@ -1,0 +1,10 @@
+node_modules/
+dist/
+*.mcpb
+.env
+.env.*
+coverage/
+.env
+logs/
+!.env.example
+.backup/

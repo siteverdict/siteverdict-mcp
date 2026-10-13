@@ -1,0 +1,38 @@
+# Draft for a PR to https://github.com/docker/mcp-registry  ->  servers/siteverdict/server.yaml
+# Generate/verify with their tooling:  task create -- --category devops https://github.com/siteverdict/siteverdict-mcp -e APIFY_TOKEN=test
+# Docker requires an OSI licence (MIT or Apache-2.0) — see LICENSE-PROPOSAL.md.
+name: siteverdict
+image: mcp/siteverdict
+type: server
+meta:
+  category: devops
+  tags:
+    - website-audit
+    - seo
+    - accessibility
+    - gdpr
+    - email
+    - apify
+about:
+  title: SiteVerdict
+  description: Website audit tools for AI agents — GDPR cookie consent & tracking, Core Web Vitals and revenue loss, WCAG 2.2 accessibility, SPF/DKIM/DMARC email health and AI-search readiness, powered by Apify Actors.
+  icon: https://raw.githubusercontent.com/siteverdict/siteverdict-mcp/main/marketplace/assets/icon-512.png
+source:
+  project: https://github.com/siteverdict/siteverdict-mcp
+  commit: CHANGE_ME_RELEASE_COMMIT_SHA
+config:
+  description: Scans run as Apify Actors on your own Apify account (pay-per-event).
+  secrets:
+    - name: siteverdict.apify_token
+      env: APIFY_TOKEN
+      example: apify_api_xxxxxxxxxxxxxxxx
+  env:
+    - name: SITEVERDICT_DEFAULT_MAX_CHARGE_USD
+      example: "2"
+      value: '{{siteverdict.max_charge_usd}}'
+  parameters:
+    type: object
+    properties:
+      max_charge_usd:
+        type: string
+        default: "2"

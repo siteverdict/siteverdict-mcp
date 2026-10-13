@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="SiteVerdict">
+  <!-- PLACEHOLDER icon: replace with final brand art. -->
+  <rect width="512" height="512" rx="112" fill="#0F2A4A"/>
+  <rect x="96" y="120" width="320" height="236" rx="28" fill="none" stroke="#FFFFFF" stroke-width="28"/>
+  <line x1="96" y1="178" x2="416" y2="178" stroke="#FFFFFF" stroke-width="20"/>
+  <polyline points="186,268 236,318 330,222" fill="none" stroke="#3DDC97" stroke-width="36" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="176" y="384" width="160" height="28" rx="14" fill="#FFFFFF"/>
+</svg>

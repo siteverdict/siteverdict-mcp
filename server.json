@@ -1,0 +1,49 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "io.github.siteverdict/siteverdict",
+  "title": "SiteVerdict — Website Audit Tools",
+  "description": "Website audits for AI agents: GDPR consent, speed, WCAG, SPF/DMARC and AI-search readiness.",
+  "version": "0.2.0",
+  "websiteUrl": "https://tools.webrevenuescan.com",
+  "repository": {
+    "url": "https://github.com/siteverdict/siteverdict-mcp",
+    "source": "github"
+  },
+  "packages": [
+    {
+      "registryType": "npm",
+      "registryBaseUrl": "https://registry.npmjs.org",
+      "identifier": "@siteverdict/mcp",
+      "version": "0.2.0",
+      "runtimeHint": "npx",
+      "transport": {
+        "type": "stdio"
+      },
+      "environmentVariables": [
+        {
+          "name": "APIFY_TOKEN",
+          "description": "Your Apify API token. Audits run as Apify Actors on your account and are billed by Apify (pay-per-event).",
+          "isRequired": true,
+          "isSecret": true,
+          "format": "string"
+        },
+        {
+          "name": "SITEVERDICT_DRY_RUN",
+          "description": "Set to 1 to return built-in sample data without calling Apify (for trying the tools).",
+          "isRequired": false,
+          "isSecret": false,
+          "format": "string",
+          "default": "0"
+        },
+        {
+          "name": "SITEVERDICT_DEFAULT_MAX_CHARGE_USD",
+          "description": "Spend cap per Actor run in USD, forwarded to Apify as maxTotalChargeUsd.",
+          "isRequired": false,
+          "isSecret": false,
+          "format": "number",
+          "default": "2"
+        }
+      ]
+    }
+  ]
+}

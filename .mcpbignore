@@ -1,0 +1,17 @@
+src/
+test/
+scripts/
+marketplace/docker-mcp-registry/
+docs/
+*.mcpb
+tsconfig*.json
+eslint.config.js
+Dockerfile
+.dockerignore
+smithery.yaml
+server.json
+glama.json
+deploy/
+.env.example
+.backup/
+logs/

@@ -255,7 +255,7 @@ export function createServer(deps: ServerDeps): McpServer {
       .default([...CHECK_KEYS])
       .describe('Which checks to run (default: all five). domain_email uses the URL\'s domain.'),
     maxPages: z.number().int().min(1).max(10).default(3).describe('Pages per crawler-based check (keeps cost and time down).'),
-    device: z.enum(['mobile', 'desktop']).default('mobile'),
+    device: z.enum(['mobile', 'desktop']).default('mobile').describe('Emulated device for the speed and UX checks; Google ranks on mobile.'),
     maxCostUsd: z.number().min(0.05).max(100).optional().describe('Total spend cap across all runs on YOUR Apify account (split evenly per check). Default: $2 per check.'),
     waitSecs: runControls.waitSecs,
   });
